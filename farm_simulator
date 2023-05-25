@@ -1,0 +1,69 @@
+import random
+
+class Farm:
+    def __init__(self):
+        self.money = 1000
+        self.animals = {'курица': 0, 'корова': 0}
+        self.crops = {'кукуруза': 0, 'пшеница': 0}
+    def buy_animal(self, animal_type):
+        if self.money >= 100:
+            self.money -= 100
+            self.animals[animal_type] += 1
+            print('Вы приобрели', animal_type)
+        else:
+            print('Недостаточно денег!')
+    def buy_crop(self, crop_type):
+        if self.money >= 50:
+            self.money -= 50
+            self.crops[crop_type] += 1
+            print('Вы приобрели', crop_type)
+        else:
+            print('Недостаточно денег!')
+    def sell_animal(self, animal_type):
+        if self.animals[animal_type] > 0:
+            self.animals[animal_type] -= 1
+            self.money += random.randint(50,200)
+            print('Вы продали', animal_type)
+        else:
+            print('У вас нет', animal_type)
+    def sell_crop(self, crop_type):
+        if self.crops[crop_type] > 0:
+            self.crops[crop_type] -= 1
+            self.money += random.randint(10,50)
+            print('Вы продали', crop_type)
+        else:
+            print('У вас нет', crop_type)
+    def status(self):
+        print('Деньги', self.money)
+        print(self.animals)
+        print(self.crops)
+
+farm = Farm()
+
+while True:
+    command = input('Выберите действие (купить/продать/статистика/выйти)').lower()
+    if command == 'купить':
+        item = input('Выберите, что хотите купить (животное/растение)').lower()
+        if item == 'животное':
+            animal = input('Выберите животное (курица/корова)').lower()
+            farm.buy_animal(animal)
+        elif item == 'растение':
+            crop = input('Выберите растение (кукуруза/пшеница)').lower()
+            farm.buy_crop(crop)
+    elif command == 'продать':
+        item = input('Выберите, что хотите продать (животное растение)').lower()
+        if item == 'животное':
+            animal = input('Выберите животное (курица/корова)').lower()
+            farm.sell_animal(animal) 
+        elif item == 'растение':
+            crop = input('Выберите растение (кукуруза/пшеница)')
+            farm.sell_crop(crop)
+    elif command == 'статистика':
+        farm.status()
+    elif command == 'выйти':
+        break
+
+
+
+
+
