@@ -41,29 +41,24 @@ class Farm:
 farm = Farm()
 
 while True:
-    command = input('Выберите действие (купить/продать/статистика/выйти)').lower()
-    if command == 'купить':
-        item = input('Выберите, что хотите купить (животное/растение)').lower()
-        if item == 'животное':
-            animal = input('Выберите животное (курица/корова)').lower()
+    command = int(input('Выберите действие (1 - купить / 2 - продать / 3 - статистика / 4 - выйти)'))
+    if command == 1:
+        item = int(input('Выберите, что хотите купить (1 - животное / 2 - растение)'))
+        if item == 1:
+            animal = input('Выберите животное (курица / корова)').lower()
             farm.buy_animal(animal)
-        elif item == 'растение':
-            crop = input('Выберите растение (кукуруза/пшеница)').lower()
+        elif item == 2:
+            crop = input('Выберите растение (кукуруза / пшеница)').lower()
             farm.buy_crop(crop)
-    elif command == 'продать':
-        item = input('Выберите, что хотите продать (животное растение)').lower()
-        if item == 'животное':
+    elif command == 2:
+        item = int(input('Выберите, что хотите продать (1 - животное / 2 - растение)'))
+        if item == 1:
             animal = input('Выберите животное (курица/корова)').lower()
             farm.sell_animal(animal) 
-        elif item == 'растение':
+        elif item == 2:
             crop = input('Выберите растение (кукуруза/пшеница)')
             farm.sell_crop(crop)
-    elif command == 'статистика':
+    elif command == 3:
         farm.status()
-    elif command == 'выйти':
+    elif command == 4:
         break
-
-
-
-
-
