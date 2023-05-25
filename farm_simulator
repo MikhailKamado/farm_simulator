@@ -5,6 +5,7 @@ class Farm:
         self.money = 1000
         self.animals = {'курица': 0, 'корова': 0}
         self.crops = {'кукуруза': 0, 'пшеница': 0}
+        self.day = 0
     def buy_animal(self, animal_type):
         if self.money >= 100:
             self.money -= 100
@@ -37,13 +38,79 @@ class Farm:
         print('Деньги', self.money)
         print(self.animals)
         print(self.crops)
+        print('День', self.day)
 
+    def days(self):
+        self.day += 1
+        if self.day % 5 == 0:
+            print('Курицы снесли яйца!')
+            self.money += self.animals['курица'] * 10
+        elif self.day % 2 == 0:
+            print('Коровы дали молоко!')
+            self.money += self.animals['корова'] * 5
+        elif self.day % 11 == 0:
+            print('Выросла кукуруза!')
+            self.money += self.crops['кукуруза'] * 2
+            self.crops['кукуруза'] = 0
+        elif self.day % 17 == 0:
+            print('Выросла пшеница!')
+            self.money += self.crops['пшеница']
+            self.crops['пшеница'] = 0 
+        elif self.day % 51 == 0:
+            print('Беда! Коровы погибли')
+            self.animals['корова'] = 0
+        elif self.day % 37 == 0:
+            print('Беда! Курицы погибли')
+            self.animals['курица'] = 0
+        self.money += random.randint(0,100)
+        event = random.randint(1,100)
+        if event == 13:
+            if self.animals['корова'] > 0:
+                print('Беда! - 1 корова')
+                self.animals['корова'] -= 1
+        elif event == 27:
+            if self.animals['курица'] > 0:
+                print("Беда! - 1 курица")
+                self.animals['курица'] -= 1
+        elif event == 32:
+            if self.crops['кукуруза'] > 0:
+                print('Беда! - 1 кукуруза')
+                self.crops['кукуруза'] -= 1
+        elif event == 48:
+            if self.crops['пшеница'] > 0:
+                print('Беда! - 1  пшеница')
+                self.crops['пшеница'] -= 1
+        elif event == 53:
+            print('Удачный день! Вернули долг (+100)')
+            self.money += 100
+        elif event == 66:
+            print('Удача! +1 корова')
+            self.animals['корова'] += 1
+        elif event == 73:
+            print('Удача! +1 курица')
+            self.animals['курица'] += 1
+        elif event == 82:
+            print('Удача! +1 кукуруза')
+            self.crops['кукуруза'] += 1
+        elif event == 93:
+            print('Удача! +1 пшеница')
+            self.crops['пшеница'] += 1
 farm = Farm()
 
 while True:
-    command = int(input('Выберите действие (1 - купить / 2 - продать / 3 - статистика / 4 - выйти)'))
+    while True:
+        try:
+            command = int(input('Выберите действие (1 - купить / 2 - продать / 3 - статистика / 4 - выйти / 5 - следующий день)'))
+            break
+        except ValueError:
+            print('Введите только число!')
     if command == 1:
-        item = int(input('Выберите, что хотите купить (1 - животное / 2 - растение)'))
+        while True:
+            try:
+                item = int(input('Выберите, что хотите купить (1 - животное / 2 - растение)'))
+                break
+            except ValueError:
+                print('Введите только число!')
         if item == 1:
             animal = input('Выберите животное (курица / корова)').lower()
             farm.buy_animal(animal)
@@ -51,7 +118,12 @@ while True:
             crop = input('Выберите растение (кукуруза / пшеница)').lower()
             farm.buy_crop(crop)
     elif command == 2:
-        item = int(input('Выберите, что хотите продать (1 - животное / 2 - растение)'))
+        while True:
+            try:
+                item = int(input('Выберите, что хотите продать (1 - животное / 2 - растение)'))
+                break
+            except:
+                print('Введите только число!')       
         if item == 1:
             animal = input('Выберите животное (курица/корова)').lower()
             farm.sell_animal(animal) 
@@ -62,3 +134,6 @@ while True:
         farm.status()
     elif command == 4:
         break
+    elif command == 5:
+        farm.days()
+    
